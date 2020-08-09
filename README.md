@@ -4,7 +4,7 @@
 
 Insert API is used to create records
 
-Request URL - host/insert
+Request URL - http://azent.us-east-2.elasticbeanstalk.com/insert
 
 Method  - POST
 
@@ -30,7 +30,7 @@ Sample Response -
 
 Update API is used to update existing records
 
-Request URL - host/update
+Request URL - http://azent.us-east-2.elasticbeanstalk.com/update
 
 Method  - PUT
 
@@ -56,7 +56,7 @@ Sample Response -
 
 Delete API is used to delete existing records
 
-Request URL - host/delete
+Request URL - http://azent.us-east-2.elasticbeanstalk.com/delete
 
 Method  - DELETE
 
@@ -82,7 +82,7 @@ Sample Response -
 
 Read API is used to list all records
 
-Request URL - host/read
+Request URL - http://azent.us-east-2.elasticbeanstalk.com/read
 
 Method  - GET
 
@@ -120,7 +120,7 @@ Sample Response -
 
 Search API is used to search existing records 
 
-Request URL : host/search
+Request URL : http://azent.us-east-2.elasticbeanstalk.com/search
 
 Method  : GET
 
