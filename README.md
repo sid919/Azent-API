@@ -9,6 +9,7 @@ Request URL - host/insert
 Method  - POST
 
 Sameple Request - 
+
 {
     "alpha_two_code": "US",
     "country": "United States ",
@@ -18,6 +19,7 @@ Sameple Request -
 }
 
 Sample Response - 
+
 {
   "id": "XXXXX",
   "record": "added",
@@ -33,6 +35,7 @@ Request URL - host/update
 Method  - PUT
 
 Sameple Request - 
+
 {
     "alpha_two_code": "US",
     "country": "USA",
@@ -42,6 +45,7 @@ Sameple Request -
 }
 
 Sample Response - 
+
 {
   "id": "XXXXX",
   "record": "updated",
@@ -57,6 +61,7 @@ Request URL - host/delete
 Method  - DELETE
 
 Sameple Request - 
+
 {
     "alpha_two_code": "US",
     "country": "USA",
@@ -66,6 +71,7 @@ Sameple Request -
 }
 
 Sample Response - 
+
 {
   "id": "XXXXX",
   "record": "deleted",
@@ -81,6 +87,7 @@ Request URL - host/read
 Method  - GET
 
 Sample Response - 
+
   [
   {
     "alpha_two_code": "US",
@@ -135,6 +142,7 @@ Sample URL - http://localhost:5000/search?search_term=iit&end_of_domain=.edu
 
 
 Sample Response- 
+
 [
   {
     "alpha_two_code": "IN",
