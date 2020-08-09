@@ -2,9 +2,9 @@ from flask import Flask, redirect, url_for ,request,abort,jsonify
 import pymysql
 
 host='xxxxxx.us-east-2.rds.amazonaws.com'
-dbName='xxx'
-uname='xxx'
-upwd='xxxx'
+dbName='xxxx'
+uname='xxxx'
+upwd='xxxxx'
 
 #********************** AWS RDS Connection Establisation ****************************************
 try:
@@ -14,14 +14,14 @@ try:
 except Exception as e:
     print(e)
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 
 
 #----------------------index-------------------------------------
 
 
-@app.route('/')
+@application.route('/')
 def admin():
    return 'API Application'
 
@@ -29,7 +29,7 @@ def admin():
 
 
 #-------------------DB search function-------------------------------
-@app.route('/guest/<search>')
+@application.route('/guest/<search>')
 def db_search(search):
   s_cur = conn.cursor()
   s_cur.execute(search)
@@ -50,7 +50,7 @@ def db_search(search):
 #-------------------------Insert API-------------------------------
 
 
-@app.route('/insert',methods = ['POST', 'GET'])
+@application.route('/insert',methods = ['POST', 'GET'])
 def API_create():
    if request.method == 'POST':
       req_type=request.is_json
@@ -110,7 +110,7 @@ def API_create():
 #--------------------------------------Update API------------------------------------
 
 
-@app.route('/update',methods = ['POST','PUT'])
+@application.route('/update',methods = ['POST','PUT'])
 def API_update():
    if request.method == 'PUT':
       req_type=request.is_json
@@ -166,7 +166,7 @@ def API_update():
 
 
 
-@app.route('/delete',methods = ['DELETE','POST'])
+@application.route('/delete',methods = ['DELETE','POST'])
 def API_delete():
    if request.method == 'DELETE':
       req_type=request.is_json
@@ -221,7 +221,7 @@ def API_delete():
 #------------------------Search API--------------------------------------
 
 
-@app.route('/search',methods = ['GET','POST'])
+@application.route('/search',methods = ['GET','POST'])
 def API_search():
    if request.method == 'GET':
       req_dict=request.args.to_dict()
@@ -229,33 +229,35 @@ def API_search():
       res = not bool(req_dict)
       if str(res) != 'True':
           search_term = request.args.get("search_term")
-          if str(search_term) != "":
-             country_code=request.args.get("country_code")
-             end_of_domain = request.args.get("end_of_domain")
-             print(country_code)
-             print(end_of_domain)
-             if str(country_code) =='None' and  str(end_of_domain) =='None':
-                search="select * from API_table where name LIKE '%"+str(search_term)+"%'"
-                print(search)
-                return redirect(url_for('db_search',search = search))
-                
+          print(search_term)
+          if str(search_term) !='None':
+              if str(search_term) != '':
+                 country_code=request.args.get("country_code")
+                 end_of_domain = request.args.get("end_of_domain")
+                 print(country_code)
+                 print(end_of_domain)
+                 if str(country_code) =='None' and  str(end_of_domain) =='None':
+                    search="select * from API_table where name LIKE '%"+str(search_term)+"%'"
+                    print(search)
+                    return redirect(url_for('db_search',search = search))
+      
+                 elif str(country_code) != 'None' and str(end_of_domain) =='None':
+                    search="select * from API_table where name LIKE '%"+str(search_term)+"%' and alpha_code LIKE'%"+str(country_code)+"%'"
+                    print(search)
+                    return redirect(url_for('db_search',search = search))
 
-             elif str(country_code) != 'None' and str(end_of_domain) =='None':
-                search="select * from API_table where name LIKE '%"+str(search_term)+"%' and alpha_code LIKE'%"+str(country_code)+"%'"
-                print(search)
-                return redirect(url_for('db_search',search = search))
+                 elif str(country_code) == 'None' and str(end_of_domain) !='None':
+                    search="select * from API_table where name LIKE '%"+str(search_term)+"%' and domain LIKE'%"+str(end_of_domain)+"'"
+                    print(search)
+                    return redirect(url_for('db_search',search = search))
 
-             elif str(country_code) == 'None' and str(end_of_domain) !='None':
-                search="select * from API_table where name LIKE '%"+str(search_term)+"%' and domain LIKE'%"+str(end_of_domain)+"'"
-                print(search)
-                return redirect(url_for('db_search',search = search))
+                 else:
+                    abort(400 ,'Parameters exceeded' )
 
-             else:
-                abort(400 ,'Parameters exceeded' )
-
-
+              else:
+                  abort(401 ,'search_term empty' )
           else:
-              abort(401 ,'search_term empty' )
+              abort(400 ,'Parameters missing' )
               
       else:
           abort(400 ,'Parameters missing' )
@@ -267,7 +269,7 @@ def API_search():
 
 #----------------------Read API--------------------------------------------------------
 
-@app.route('/read',methods = ['GET','POST'])
+@application.route('/read',methods = ['GET','POST'])
 def API_read():
    if request.method == 'GET':
       search="select * from API_table"
@@ -278,4 +280,5 @@ def API_read():
 
 
 if __name__ == '__main__':
-   app.run(debug = True)
+   application.debug = True
+   application.run()
