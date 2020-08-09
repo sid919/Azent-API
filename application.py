@@ -1,10 +1,10 @@
 from flask import Flask, redirect, url_for ,request,abort,jsonify
 import pymysql
 
-host='dbtest.cdpdjnib92e7.us-east-2.rds.amazonaws.com'
-dbName='API'
-uname='admin'
-upwd='admin123'
+host='xxxxxx.us-east-2.rds.amazonaws.com'
+dbName='xxx'
+uname='xxx'
+upwd='xxxx'
 
 #********************** AWS RDS Connection Establisation ****************************************
 try:
